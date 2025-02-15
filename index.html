@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Slider</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #8bb68c;
+        flex-direction: column;
+      }
+      .slider-container {
+        background-color: rgb(232, 224, 224);
+        width: 90%;
+        max-width: 800px;
+        height: 500px;
+        position: relative;
+        overflow: hidden;
+        perspective: 1000px;
+      }
+      .slider {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+        transform-style: preserve-3d;
+      }
+      .slider img {
+        width: 60%;
+        height: auto;
+        max-height: 100%;
+        position: absolute;
+        transition: transform 0.5s ease-in-out;
+        transform: scale(1);
+      }
+      .nav-buttons {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+      }
+      .nav-buttons button {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <h1 style="color: white">Welcome to our Hotel</h1>
+    </center>
+    <div class="slider-container">
+      <div class="slider">
+        <img src="i1.png" alt="Image 1" class="slide" />
+        <img src="i2.png" alt="Image 2" class="slide" />
+        <img src="i3.png" alt="Image 3" class="slide" />
+      </div>
+      <div class="nav-buttons">
+        <button onclick="prevSlide()">&#10094;</button>
+        <button onclick="nextSlide()">&#10095;</button>
+      </div>
+    </div>
+    <script>
+      let index = 0;
+      const slides = document.querySelectorAll(".slide");
+      function updateSlides() {
+        slides.forEach((slide, i) => {
+          const offset = (i - index) * 120;
+          slide.style.transform = `translateX(${offset}%) scale(${
+            i === index ? 1 : 0.8
+          })`;
+          slide.style.zIndex = i === index ? 10 : 5;
+          slide.style.opacity = i === index ? 1 : 0.5;
+        });
+      }
+      function nextSlide() {
+        index = (index + 1) % slides.length;
+        updateSlides();
+      }
+      function prevSlide() {
+        index = (index - 1 + slides.length) % slides.length;
+        updateSlides();
+      }
+      updateSlides();
+      setInterval(nextSlide, 3000);
+    </script>
+  </body>
+</html>
